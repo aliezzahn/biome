@@ -385,6 +385,7 @@
 			},
 			"additionalProperties": false
 		},
+		"ArrayWrap": { "type": "string", "enum": ["preserve", "expand"] },
 		"ArrowParentheses": { "type": "string", "enum": ["always", "asNeeded"] },
 		"AssistConfiguration": {
 			"type": "object",
@@ -1306,7 +1307,6 @@
 			"type": "object",
 			"additionalProperties": false
 		},
-		"Expand": { "type": "string", "enum": ["always", "followSource"] },
 		"FilenameCase": {
 			"description": "Supported cases for file names.",
 			"oneOf": [
@@ -2031,6 +2031,10 @@
 		"JsonFormatterConfiguration": {
 			"type": "object",
 			"properties": {
+				"arrayWrap": {
+					"description": "Whether to expand arrays and objects on multiple lines. When set to `expand`, these literals are formatted on multiple lines, regardless of length of the list. When formatting `package.json`, Biome will use `expand` unless configured otherwise. Defaults to \"preserve\".",
+					"anyOf": [{ "$ref": "#/definitions/ArrayWrap" }, { "type": "null" }]
+				},
 				"bracketSpacing": {
 					"description": "Whether to insert spaces around brackets in object literals. Defaults to true.",
 					"anyOf": [
@@ -2041,10 +2045,6 @@
 				"enabled": {
 					"description": "Control the formatter for JSON (and its super languages) files.",
 					"anyOf": [{ "$ref": "#/definitions/Bool" }, { "type": "null" }]
-				},
-				"expand": {
-					"description": "Whether to expand arrays and objects on multiple lines. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to \"followSource\".",
-					"anyOf": [{ "$ref": "#/definitions/Expand" }, { "type": "null" }]
 				},
 				"indentStyle": {
 					"description": "The indent style applied to JSON (and its super languages) files.",
@@ -2937,7 +2937,10 @@
 				{ "description": "`{foo}`", "type": "string", "enum": ["shorthand"] }
 			]
 		},
-		"ObjectWrap": { "type": "string", "enum": ["preserve", "collapse"] },
+		"ObjectWrap": {
+			"type": "string",
+			"enum": ["preserve", "collapse", "expand"]
+		},
 		"Options": {
 			"type": "object",
 			"properties": {

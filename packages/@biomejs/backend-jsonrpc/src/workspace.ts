@@ -423,7 +423,7 @@ export type LineEnding = "lf" | "crlf" | "cr";
 The allowed range of values is 1..=320 
 	 */
 export type LineWidth = number;
-export type ObjectWrap = "preserve" | "collapse";
+export type ObjectWrap = "preserve" | "collapse" | "expand";
 /**
  * Options that changes how the GraphQL linter behaves
  */
@@ -671,6 +671,10 @@ export interface JsonAssistConfiguration {
 }
 export interface JsonFormatterConfiguration {
 	/**
+	 * Whether to expand arrays and objects on multiple lines. When set to `expand`, these literals are formatted on multiple lines, regardless of length of the list. When formatting `package.json`, Biome will use `expand` unless configured otherwise. Defaults to "preserve".
+	 */
+	arrayWrap?: ArrayWrap;
+	/**
 	 * Whether to insert spaces around brackets in object literals. Defaults to true.
 	 */
 	bracketSpacing?: BracketSpacing;
@@ -678,10 +682,6 @@ export interface JsonFormatterConfiguration {
 	 * Control the formatter for JSON (and its super languages) files.
 	 */
 	enabled?: Bool;
-	/**
-	 * Whether to expand arrays and objects on multiple lines. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "followSource".
-	 */
-	expand?: Expand;
 	/**
 	 * The indent style applied to JSON (and its super languages) files.
 	 */
@@ -840,7 +840,7 @@ export type Semicolons = "always" | "asNeeded";
  * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
  */
 export type TrailingCommas = "all" | "es5" | "none";
-export type Expand = "always" | "followSource";
+export type ArrayWrap = "preserve" | "expand";
 export type TrailingCommas2 = "none" | "all";
 export type SeverityOrGroup_for_A11y = GroupPlainConfiguration | A11y;
 export type SeverityOrGroup_for_Complexity =
